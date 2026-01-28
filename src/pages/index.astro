@@ -1,0 +1,222 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = [
+  {
+    title: "Project One",
+    desc: "One-line description of what it does and why it matters.",
+    href: "https://example.com",
+    tags: ["TypeScript", "Web"],
+  },
+  {
+    title: "Project Two",
+    desc: "Another strong one-liner. Keep it simple.",
+    href: "https://example.com",
+    tags: ["APIs", "UI"],
+  },
+];
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+
+<SiteLayout title="Sid" description="Minimal portfolio + blog.">
+  <section class="hero">
+    <h1>Hi, I’m Your Name.</h1>
+    <p class="sub">
+      I build clean, reliable software. This is my work and writing.
+    </p>
+
+    <div class="links">
+      <a class="u" href="https://github.com/yourhandle" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <a class="u" href="https://www.linkedin.com/in/yourhandle/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+      <a class="u" href="mailto:you@example.com">Email</a>
+    </div>
+  </section>
+
+  <section id="projects" class="block">
+    <h2>Projects</h2>
+    <div class="cards">
+      {projects.map((p) => (
+        <a class="card" href={p.href} target="_blank" rel="noreferrer">
+          <div class="row">
+            <div>
+              <div class="t">{p.title}</div>
+              <div class="d">{p.desc}</div>
+              <div class="tags">
+                {p.tags.map((t) => <span class="tag">{t}</span>)}
+              </div>
+            </div>
+            <span class="arrow">↗</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+<section class="block">
+<div class="rowHead">
+	<h2>Latest writing</h2>
+	<a class="u" href="/blog">All posts →</a>
+</div>
+
+<div class="cards">
+	{posts.map((p) => (
+	<a class="card" href={`/blog/${p.slug}`}>
+		<div class="row">
+		<div>
+			<div class="t">{p.data.title}</div>
+			{p.data.excerpt && <div class="d">{p.data.excerpt}</div>}
+			<div class="meta">
+			{p.data.date.toLocaleDateString("en-GB", {
+				year: "numeric",
+				month: "short",
+				day: "2-digit",
+			})}
+			</div>
+		</div>
+		<span class="arrow">→</span>
+		</div>
+	</a>
+	))}
+</div>
+</section>
+
+
+  <section id="about" class="block">
+    <h2>About</h2>
+    <p class="d">
+      Short bio. What you’re learning, what you like building, and what roles you want.
+    </p>
+  </section>
+</SiteLayout>
+
+<style>
+  .hero {
+	padding: 36px 0 24px;
+  }
+
+
+  h1 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .sub {
+    margin: 14px 0 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .links {
+    margin-top: 16px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+
+  /* “minimal but alive”: underline anim on hover */
+  .u {
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .u::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 100%;
+    background: var(--border);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 180ms ease;
+  }
+  .u:hover::after {
+    transform: scaleX(1);
+  }
+
+  .block {
+    margin-top: 44px;
+  }
+
+  .cards {
+    display: grid;
+    gap: 12px;
+  }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card:hover {
+    border-color: #cfcfcf;
+    transform: translateY(-1px);
+  }
+
+  .row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .t {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .d {
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  .tags {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .arrow {
+    color: #bdbdbd;
+  }
+
+  .rowHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .meta {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+</style>

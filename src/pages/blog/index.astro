@@ -1,0 +1,45 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<SiteLayout title="Blog — Your Name" description="Writing and notes.">
+  <h1 style="margin: 28px 0 0; font-size: 28px; letter-spacing: -0.02em;">Blog</h1>
+  <p style="margin: 10px 0 0; color: var(--muted); line-height: 1.6;">
+    Writing about what I’m learning and building.
+  </p>
+
+  <ul style="list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px;">
+    {posts.map((post) => (
+      <li>
+        <a
+          href={`/blog/${post.slug}`}
+          style="display:block; border:1px solid var(--border); border-radius:14px; padding:14px; transition: border-color 150ms ease, transform 150ms ease;"
+        >
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+            <div>
+              <div style="font-weight:600;">{post.data.title}</div>
+              {post.data.excerpt && (
+                <div style="margin-top:6px; color:var(--muted); font-size:14px; line-height:1.6;">
+                  {post.data.excerpt}
+                </div>
+              )}
+              <div style="margin-top:10px; color:var(--muted); font-size:12px;">
+                {post.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "2-digit" })}
+              </div>
+            </div>
+            <span style="color:#bdbdbd;">→</span>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <style>
+    a:hover { border-color: #cfcfcf; transform: translateY(-1px); }
+  </style>
+</SiteLayout>
