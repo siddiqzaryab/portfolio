@@ -23,9 +23,9 @@ const posts = (await getCollection("blog"))
 ---
 
 
-<SiteLayout title="Sid" description="Minimal portfolio + blog.">
+<SiteLayout title="Your Name" description="Minimal portfolio + blog.">
   <section class="hero">
-    <h1>Hi, I’m Your Name.</h1>
+    <h1>Hi, I’m Sid.</h1>
     <p class="sub">
       I build clean, reliable software. This is my work and writing.
     </p>
@@ -35,6 +35,12 @@ const posts = (await getCollection("blog"))
       <a class="u" href="https://www.linkedin.com/in/yourhandle/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
       <a class="u" href="mailto:you@example.com">Email</a>
     </div>
+  </section>
+  <section id="about" class="block">
+    <h2>About</h2>
+    <p class="d">
+      Short bio. What you’re learning, what you like building, and what roles you want.
+    </p>
   </section>
 
   <section id="projects" class="block">
@@ -86,12 +92,7 @@ const posts = (await getCollection("blog"))
 </section>
 
 
-  <section id="about" class="block">
-    <h2>About</h2>
-    <p class="d">
-      Short bio. What you’re learning, what you like building, and what roles you want.
-    </p>
-  </section>
+  
 </SiteLayout>
 
 <style>
