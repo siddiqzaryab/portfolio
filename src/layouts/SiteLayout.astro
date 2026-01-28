@@ -13,7 +13,7 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
   <body>
     <header class="wrap">
       <div class="top">
-        <a class="brand" href="/">Sid</a>
+        <a class="brand" href="/">ipysid.</a>
         <nav class="nav">
           <a class={Astro.url.pathname === "/blog" ? "active" : ""} href="/blog">Blog</a>
           <a href="/#projects">Projects</a>
@@ -28,7 +28,7 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
     </main>
 
     <footer class="wrap foot">
-      <span>© {new Date().getFullYear()} Sid</span>
+      <span>© {new Date().getFullYear()} ipysid</span>
       <a href="mailto:ipysid@gmail.com">Email</a>
     </footer>
   </body>
@@ -36,13 +36,33 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
 
 <style>
   :global(:root) {
-    color-scheme: light;
-    --text: #0a0a0a;
-    --muted: #666;
-    --border: #eaeaea;
-    --bg: #fafafa;
+  color-scheme: light dark;
 
+  --bg: #f8f9fb;
+  --text: #0a0a0a;
+  --muted: #666;
+  --border: #e6e6e6;
+  --card: #ffffff;
+}
+
+/* Dark mode via system preference */
+@media (prefers-color-scheme: dark) {
+  :global(:root) {
+    --bg: #0b0c0f;
+    --text: #f2f2f2;
+    --muted: #9ca3af;
+    --border: #1f2933;   /* softer than before */
+    --card: #0f1117;
   }
+  a {
+    color: #c7d2fe;
+  }
+  .card:hover {
+    background: #12141a;
+  }
+}
+
+
 
   :global(body) {
     margin: 0;
@@ -52,6 +72,12 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
     color: var(--text);
     letter-spacing: -0.01em;
   }
+
+  /* consistent typography */
+  :global(h1) { font-size: 40px; line-height: 1.05; letter-spacing: -0.04em; margin: 0; }
+  :global(p) { margin: 0; }
+
+
 
   a {
     color: inherit;
@@ -64,10 +90,11 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
 
 
   .wrap {
-    max-width: 840px;
+    max-width: 880px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 28px 24px;
   }
+
 
 
   .top {
