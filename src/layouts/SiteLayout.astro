@@ -19,7 +19,6 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
           <a href="/#projects">Projects</a>
           <a href="/#about">About</a>
         </nav>
-
       </div>
     </header>
 
@@ -29,106 +28,175 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
 
     <footer class="wrap foot">
       <span>© {new Date().getFullYear()} ipysid</span>
-      <a href="mailto:ipysid@gmail.com">Email</a>
+      <a href="mailto:ipysid@gmail.com" class="footer-link">Email</a>
     </footer>
   </body>
 </html>
 
 <style>
   :global(:root) {
-  color-scheme: light dark;
+    color-scheme: light dark;
 
-  --bg: #f8f9fb;
-  --text: #0a0a0a;
-  --muted: #666;
-  --border: #e6e6e6;
-  --card: #ffffff;
-}
-
-/* Dark mode via system preference */
-@media (prefers-color-scheme: dark) {
-  :global(:root) {
-    --bg: #0b0c0f;
-    --text: #f2f2f2;
-    --muted: #9ca3af;
-    --border: #1f2933;   /* softer than before */
-    --card: #0f1117;
+    --bg: #fafbfc;
+    --text: #0a0a0a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --card: #ffffff;
+    --accent: #3b82f6;
   }
-  a {
-    color: #c7d2fe;
-  }
-  .card:hover {
-    background: #12141a;
-  }
-}
 
+  /* Dark mode via system preference */
+  @media (prefers-color-scheme: dark) {
+    :global(:root) {
+      --bg: #0a0b0f;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: #1e293b;
+      --card: #0f1419;
+      --accent: #60a5fa;
+    }
 
+    .card:hover {
+      background: #151a21;
+    }
+  }
 
   :global(body) {
     margin: 0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
-      "Segoe UI Emoji";
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+      "Apple Color Emoji", "Segoe UI Emoji";
     background: var(--bg);
     color: var(--text);
     letter-spacing: -0.01em;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* consistent typography */
-  :global(h1) { font-size: 40px; line-height: 1.05; letter-spacing: -0.04em; margin: 0; }
-  :global(p) { margin: 0; }
+  /* Consistent typography */
+  :global(h1) {
+    font-size: 40px;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin: 0;
+    font-weight: 700;
+  }
 
+  :global(p) {
+    margin: 0;
+    line-height: 1.6;
+  }
 
-
-  a {
+  :global(a) {
     color: inherit;
     text-decoration: none;
   }
-  
-  .nav a.active {
-    color: var(--text);
-  }
-
 
   .wrap {
-    max-width: 880px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 28px 24px;
+    padding: 32px 24px;
   }
-
-
 
   .top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 16px;
-    padding-bottom: 16px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--border);
   }
 
   .brand {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    transition: opacity 150ms ease;
+  }
+
+  .brand:hover {
+    opacity: 0.7;
   }
 
   .nav {
     display: flex;
-    gap: 14px;
+    gap: 20px;
     font-size: 14px;
     color: var(--muted);
+    font-weight: 500;
+  }
+
+  .nav a {
+    position: relative;
+    transition: color 150ms ease;
+  }
+
+  .nav a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav a:hover {
     color: var(--text);
   }
 
+  .nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav a.active {
+    color: var(--text);
+  }
+
+  .nav a.active::after {
+    transform: scaleX(1);
+  }
+
   .foot {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 16px;
     border-top: 1px solid var(--border);
     color: var(--muted);
     font-size: 14px;
-    padding-top: 16px;
-    margin-top: 56px;
+    padding-top: 24px;
+    margin-top: 80px;
+  }
+
+  .footer-link {
+    font-weight: 500;
+    transition: color 150ms ease;
+  }
+
+  .footer-link:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 640px) {
+    .wrap {
+      padding: 24px 20px;
+    }
+
+    .top {
+      padding-bottom: 16px;
+    }
+
+    .nav {
+      gap: 16px;
+    }
+
+    .foot {
+      margin-top: 64px;
+      padding-top: 20px;
+    }
   }
 </style>

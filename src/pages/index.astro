@@ -158,23 +158,18 @@ const posts = (await getCollection("blog"))
   .cards {
     display: grid;
     gap: 12px;
-    background: var(--card);
-
   }
 
   .card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
-  transition: border-color 150ms ease, transform 150ms ease, background 150ms ease;
-}
-
-.card:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in oklab, var(--border), var(--text) 18%);
-}
-
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card:hover {
+    border-color: #cfcfcf;
+    transform: translateY(-1px);
+  }
 
   .row {
     display: flex;
