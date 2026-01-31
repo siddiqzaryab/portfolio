@@ -1,5 +1,5 @@
 ---
-const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro.props;
+const { title = "Sid | ipysid", description = "Backend dev and ML curious. Perpetual learner. Occasionally burns things in the kitchen." } = Astro.props;
 ---
 
 <!doctype html>
@@ -9,14 +9,24 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+
+    <!-- Favicon (uses GitHub avatar as a fallback — swap for your own .ico if you have one) -->
+    <link rel="icon" type="image/png" href="https://github.com/siddiqzaryab.png?size=32" />
   </head>
   <body>
+    <div class="cursor-glow" id="cursorGlow"></div>
     <header class="wrap">
       <div class="top">
-        <a class="brand" href="/">ipysid.</a>
-        <nav class="nav">
+        <a class="brand" href="/" aria-label="ipysid — home">ipysid.</a>
+        <nav class="nav" aria-label="Main navigation">
           <a class={Astro.url.pathname === "/blog" ? "active" : ""} href="/blog">Blog</a>
-          <a href="/#projects">Projects</a>
+          <a class={Astro.url.pathname === "/projects" ? "active" : ""} href="/projects">Projects</a>
           <a href="/#about">About</a>
         </nav>
       </div>
@@ -30,6 +40,33 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
       <span>© {new Date().getFullYear()} ipysid</span>
       <a href="mailto:ipysid@gmail.com" class="footer-link">Email</a>
     </footer>
+    <script>
+      (function () {
+        // Skip on touch devices
+        if (window.matchMedia("(hover: none)").matches) return;
+
+        const glowEl = document.getElementById("cursorGlow");
+        if (!glowEl) return;
+        const glow: HTMLElement = glowEl;
+        let targetX = -200, targetY = -200;
+        let currentX = -200, currentY = -200;
+
+        document.addEventListener("mousemove", (e) => {
+          targetX = e.clientX;
+          targetY = e.clientY;
+        });
+
+        function animate() {
+          // Lerp — smooth trailing
+          currentX += (targetX - currentX) * 0.12;
+          currentY += (targetY - currentY) * 0.12;
+
+          glow.style.transform = `translate(${currentX}px, ${currentY}px)`;
+          requestAnimationFrame(animate);
+        }
+        animate();
+      })();
+    </script>
   </body>
 </html>
 
@@ -42,6 +79,7 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
     --muted: #64748b;
     --border: #e2e8f0;
     --card: #ffffff;
+    --card-hover: #f1f5f9;
     --accent: #3b82f6;
   }
 
@@ -53,12 +91,13 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
       --muted: #94a3b8;
       --border: #1e293b;
       --card: #0f1419;
+      --card-hover: #151a21;
       --accent: #60a5fa;
     }
+  }
 
-    .card:hover {
-      background: #151a21;
-    }
+  :global(html) {
+    scroll-behavior: smooth;
   }
 
   :global(body) {
@@ -73,13 +112,23 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Consistent typography */
-  :global(h1) {
-    font-size: 40px;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    margin: 0;
-    font-weight: 700;
+  :global(.cursor-glow) {
+    position: fixed;
+    top: -250px;
+    left: -250px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(.cursor-glow) {
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    }
   }
 
   :global(p) {
@@ -93,7 +142,7 @@ const { title = "Your Name", description = "Minimal portfolio + blog." } = Astro
   }
 
   .wrap {
-    max-width: 720px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 32px 24px;
   }
