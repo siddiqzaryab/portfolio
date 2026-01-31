@@ -7,115 +7,39 @@ const posts = (await getCollection("blog")).sort(
 );
 ---
 
-<SiteLayout title="Blog — ipysid" description="Thoughts from someone who Googles everything.">
-  <div class="header">
-    <h1>Blog</h1>
-    <p class="sub">Thoughts from someone who Googles everything.</p>
-  </div>
+<SiteLayout title="Blog — Your Name" description="Writing and notes.">
+  <h1 style="margin: 28px 0 0; font-size: 28px; letter-spacing: -0.02em;">Blog</h1>
+  <p style="margin: 10px 0 0; color: var(--muted); line-height: 1.6;">
+    Writing about what I’m learning and building.
+  </p>
 
-  <ul class="cards">
+  <ul style="list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px;">
     {posts.map((post) => (
       <li>
         <a
-          class="card"
           href={`/blog/${post.slug}`}
-          aria-label={`${post.data.title} — blog post`}
+          style="display:block; border:1px solid var(--border); border-radius:14px; padding:14px; transition: border-color 150ms ease, transform 150ms ease;"
         >
-          <div class="row">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
             <div>
-              <div class="t">{post.data.title}</div>
+              <div style="font-weight:600;">{post.data.title}</div>
               {post.data.excerpt && (
-                <div class="d">{post.data.excerpt}</div>
+                <div style="margin-top:6px; color:var(--muted); font-size:14px; line-height:1.6;">
+                  {post.data.excerpt}
+                </div>
               )}
-              <div class="meta">
-                {post.data.date.toLocaleDateString("en-GB", {
-                  year: "numeric",
-                  month: "short",
-                  day: "2-digit",
-                })}
+              <div style="margin-top:10px; color:var(--muted); font-size:12px;">
+                {post.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "2-digit" })}
               </div>
             </div>
-            <span class="arrow" aria-hidden="true">→</span>
+            <span style="color:#bdbdbd;">→</span>
           </div>
         </a>
       </li>
     ))}
   </ul>
+
+  <style>
+    a:hover { border-color: #cfcfcf; transform: translateY(-1px); }
+  </style>
 </SiteLayout>
-
-<style>
-  .header {
-    padding-top: 28px;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 36px;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    font-weight: 700;
-  }
-
-  .sub {
-    margin: 10px 0 0;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .cards {
-    list-style: none;
-    padding: 0;
-    margin: 28px 0 0;
-    display: grid;
-    gap: 12px;
-  }
-
-  .card {
-    display: block;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px;
-    background: var(--card);
-    transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
-  }
-
-  .card:hover {
-    border-color: var(--accent);
-    background: var(--card-hover);
-    transform: translateY(-1px);
-  }
-
-  .row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .t {
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-
-  .d {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .meta {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 12px;
-  }
-
-  .arrow {
-    color: var(--muted);
-    transition: color 150ms ease, transform 150ms ease;
-  }
-
-  .card:hover .arrow {
-    color: var(--accent);
-    transform: translateX(3px);
-  }
-</style>

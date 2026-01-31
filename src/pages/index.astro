@@ -15,18 +15,6 @@ const projects = [
     href: "https://example.com",
     tags: ["APIs", "UI"],
   },
-  {
-    title: "Project Three",
-    desc: "Short description of the project and its impact.",
-    href: "https://example.com",
-    tags: ["Python", "ML"],
-  },
-  {
-    title: "Project Four",
-    desc: "What it does, why you built it, who it's for.",
-    href: "https://example.com",
-    tags: ["React", "Node"],
-  },
 ];
 
 const posts = (await getCollection("blog"))
@@ -34,133 +22,90 @@ const posts = (await getCollection("blog"))
   .slice(0, 3);
 ---
 
-<SiteLayout title="Sid | ipysid" description="Backend dev and ML curious. Perpetual learner. Occasionally burns things in the kitchen.">
+
+<SiteLayout title="Your Name" description="Minimal portfolio + blog.">
   <section class="hero">
-    <div class="hero-row">
-      <div class="hero-text">
-        <h1>Hi, I'm Sid.</h1>
-        <p class="sub">
-          I'm figuring out how to make machines think. So far, so chaotic.
-        </p>
+    <h1>Hi, I’m Sid.</h1>
+    <p class="sub">
+      I build clean, reliable software. This is my work and writing.
+    </p>
 
-        <div class="links">
-          <a class="u" href="https://github.com/siddiqzaryab" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <a class="u" href="https://www.linkedin.com/in/siddiqzaryab/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-          <a class="u" href="mailto:ipysid@gmail.com">Email</a>
-        </div>
-      </div>
-
-      <img
-        class="avatar"
-        src="https://github.com/siddiqzaryab.png?size=160"
-        alt="Sid"
-        width="120"
-        height="120"
-      />
+    <div class="links">
+      <a class="u" href="https://github.com/yourhandle" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <a class="u" href="https://www.linkedin.com/in/yourhandle/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+      <a class="u" href="mailto:you@example.com">Email</a>
     </div>
   </section>
-
   <section id="about" class="block">
     <h2>About</h2>
     <p class="d">
-      Backend dev and ML curious by day. I build APIs, poke at Python, and pretend I understand what the loss curve is doing. Still very much on the learning train — and honestly that's the fun part. When I'm not staring at a terminal, I'm either burning something in the kitchen, hunting for the perfect shot on the street, or deep into a book pretending I'll finish it this time. Perpetual learner. Occasional cook. Surprisingly, a morning person.
+      Short bio. What you’re learning, what you like building, and what roles you want.
     </p>
   </section>
 
   <section id="projects" class="block">
-    <div class="rowHead">
-      <h2>Projects</h2>
-      <a class="u" href="/projects">All projects →</a>
-    </div>
-    <div class="project-grid">
-      {projects.map((p) => (
-        <a class="pcard" href={p.href} target="_blank" rel="noreferrer" aria-label={`${p.title} — ${p.desc}`}>
-          <div class="pcard-head">
-            <div class="t">{p.title}</div>
-            <span class="arrow" aria-hidden="true">↗</span>
-          </div>
-          <div class="d">{p.desc}</div>
-          <div class="tags">
-            {p.tags.map((t) => <span class="tag">{t}</span>)}
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section id="writing" class="block">
-    <div class="rowHead">
-      <h2>Latest writing</h2>
-      <a class="u" href="/blog">All posts →</a>
-    </div>
-
+    <h2>Projects</h2>
     <div class="cards">
-      {posts.map((p) => (
-        <a class="card" href={`/blog/${p.slug}`} aria-label={`${p.data.title} — blog post`}>
+      {projects.map((p) => (
+        <a class="card" href={p.href} target="_blank" rel="noreferrer">
           <div class="row">
             <div>
-              <div class="t">{p.data.title}</div>
-              {p.data.excerpt && <div class="d">{p.data.excerpt}</div>}
-              <div class="meta">
-                {p.data.date.toLocaleDateString("en-GB", {
-                  year: "numeric",
-                  month: "short",
-                  day: "2-digit",
-                })}
+              <div class="t">{p.title}</div>
+              <div class="d">{p.desc}</div>
+              <div class="tags">
+                {p.tags.map((t) => <span class="tag">{t}</span>)}
               </div>
             </div>
-            <span class="arrow" aria-hidden="true">→</span>
+            <span class="arrow">↗</span>
           </div>
         </a>
       ))}
     </div>
   </section>
+
+<section class="block">
+<div class="rowHead">
+	<h2>Latest writing</h2>
+	<a class="u" href="/blog">All posts →</a>
+</div>
+
+<div class="cards">
+	{posts.map((p) => (
+	<a class="card" href={`/blog/${p.slug}`}>
+		<div class="row">
+		<div>
+			<div class="t">{p.data.title}</div>
+			{p.data.excerpt && <div class="d">{p.data.excerpt}</div>}
+			<div class="meta">
+			{p.data.date.toLocaleDateString("en-GB", {
+				year: "numeric",
+				month: "short",
+				day: "2-digit",
+			})}
+			</div>
+		</div>
+		<span class="arrow">→</span>
+		</div>
+	</a>
+	))}
+</div>
+</section>
+
+
+  
 </SiteLayout>
 
 <style>
   .hero {
-    padding: 36px 0 24px;
+	padding: 36px 0 24px;
   }
 
-  .hero-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 24px;
-  }
-
-  .hero-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--border);
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 480px) {
-    .hero-row {
-      flex-direction: column-reverse;
-      align-items: flex-start;
-    }
-
-    .avatar {
-      width: 88px;
-      height: 88px;
-    }
-  }
 
   h1 {
     margin: 0;
-    font-size: 36px;
+    font-size: 34px;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    font-weight: 700;
   }
 
   h2 {
@@ -169,7 +114,6 @@ const posts = (await getCollection("blog"))
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
-    font-weight: 600;
   }
 
   .sub {
@@ -186,7 +130,7 @@ const posts = (await getCollection("blog"))
     font-size: 14px;
   }
 
-  /* Underline animation on hover */
+  /* “minimal but alive”: underline anim on hover */
   .u {
     position: relative;
     padding-bottom: 2px;
@@ -220,12 +164,10 @@ const posts = (await getCollection("blog"))
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 14px;
-    background: var(--card);
-    transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    transition: border-color 150ms ease, transform 150ms ease;
   }
   .card:hover {
-    border-color: var(--accent);
-    background: var(--card-hover);
+    border-color: #cfcfcf;
     transform: translateY(-1px);
   }
 
@@ -263,12 +205,7 @@ const posts = (await getCollection("blog"))
   }
 
   .arrow {
-    color: var(--muted);
-    transition: color 150ms ease, transform 150ms ease;
-  }
-  .card:hover .arrow {
-    color: var(--accent);
-    transform: translate(2px, -2px);
+    color: #bdbdbd;
   }
 
   .rowHead {
@@ -277,57 +214,10 @@ const posts = (await getCollection("blog"))
     justify-content: space-between;
     gap: 16px;
   }
-
   .meta {
     margin-top: 10px;
     color: var(--muted);
     font-size: 12px;
   }
-  .project-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
 
-  .pcard {
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
-    background: var(--card);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
-  }
-  .pcard:hover {
-    border-color: var(--accent);
-    background: var(--card-hover);
-    transform: translateY(-1px);
-  }
-
-  .pcard-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .pcard .d {
-    flex-grow: 1;
-  }
-
-  .pcard .tags {
-    margin-top: auto;
-  }
-
-  .pcard:hover .arrow {
-    color: var(--accent);
-    transform: translate(2px, -2px);
-  }
-
-  @media (max-width: 480px) {
-    .project-grid {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>
